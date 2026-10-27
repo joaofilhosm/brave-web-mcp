@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brave Web MCP</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d0f14;
+        --card: #161a23;
+        --border: #262c3a;
+        --text: #e6e9ef;
+        --muted: #9aa4b8;
+        --accent: #fb542b;
+        --accent2: #ff7a45;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        background: radial-gradient(1200px 600px at 20% -10%, #1b2130 0%, var(--bg) 55%);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 48px 20px;
+      }
+      .wrap { max-width: 780px; margin: 0 auto; }
+      .badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(251, 84, 43, .12);
+        border: 1px solid rgba(251, 84, 43, .35);
+        color: var(--accent2);
+        padding: 6px 12px; border-radius: 999px;
+        font-size: 13px; font-weight: 600; letter-spacing: .02em;
+      }
+      h1 { font-size: 40px; margin: 18px 0 10px; letter-spacing: -.02em; }
+      h1 span { color: var(--accent); }
+      p.lead { color: varmuted; font-size: 17px; line-height: 1.6; margin: 0 0 28px; }
+      .card {
+        background: var(--card); border: 1px solid var(--border);
+        border-radius: 14px; padding: 22px; margin-bottom: 16px;
+      }
+      .card h2 { margin: 0 0 6px; font-size: 17px; }
+      .card p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+      pre {
+        background: #0a0c11; border: 1px solid var(--border); border-radius: 10px;
+        padding: 14px; overflow-x: auto; margin: 0;
+      }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+      .tools { list-style: none; padding: 0; margin: 0; }
+      .tools li {
+        padding: 11px 0; border-bottom: 1px solid var(--border);
+        display: flex; gap: 12px; align-items: baseline;
+      }
+      .tools li:last-child { border-bottom: none; }
+      .tools b { color: var(--accent2); font-family: ui-monospace, monospace; font-size: 14px; min-width: 130px; }
+      .tools span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+      a { color: var(--accent2); }
+      footer { color: var(--muted); font-size: 13px; margin-top: 28px; text-align: center; }
+      .dot { width: 7px; height: 7px; border-radius: 50%; background: #35c759; display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="badge"><span class="dot"></span> Online — Model Context Protocol</div>
+      <h1>Brave <span>Web</span> MCP</h1>
+      <p class="lead">
+        Servidor MCP stateless para busca em tempo real na internet, com a Brave Search API
+        e fallback automatico para o DuckDuckGo. Le paginas e extrai conteudo em Markdown.
+        Roda em serverless na Vercel.
+      </p>
+
+      <div class="card">
+        <h2>Endpoint</h2>
+        <p>Configure o cliente MCP apontando para esta URL (transporte Streamable HTTP):</p>
+        <pre><code>{
+  "mcpServers": {
+    "brave-web": {
+      "type": "http",
+      "url": "https://SEU-DOMINIO.vercel.app/mcp"
+    }
+  }
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>Tools disponíveis</h2>
+        <ul class="tools">
+          <li><b>web_search</b><span>Busca na web, notícias, imagens e vídeos. Brave primeiro, DuckDuckGo como fallback. Filtros de idioma, país e recência.</span></li>
+          <li><b>web_context</b><span>Busca e extrai excertos das próprias páginas, grounding com fonte em uma chamada.</span></li>
+          <li><b>web_fetch</b><span>Lê uma URL e retorna o conteúdo principal em Markdown, sem scripts, nav ou rodapé.</span></li>
+          <li><b>search_and_read</b><span>Busca e lê os melhores resultados em uma única chamada.</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Segurança</h2>
+        <p>
+          O <code>web_fetch</code> valida cada redirecionamento contra redes privadas, loopback e
+          metadata de cloud (proteção SSRF), e resolve o DNS novamente no momento da conexão para
+          bloquear DNS rebinding.
+        </p>
+      </div>
+
+      <footer>Model Context Protocol · Brave Search API + DuckDuckGo · Vercel</footer>
+    </div>
+  </body>
+</html>
